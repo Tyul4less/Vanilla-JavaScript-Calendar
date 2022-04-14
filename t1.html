@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="../../../테스트/jquery-3.6.0.min.js"></script>>
+    <style>
+        fieldset {
+            width: 525px;
+            border: 1px solid black;
+            color: black;
+            text-align: left;
+            font-size: 30px;
+            border-radius: 20px;
+            border: solid 3px
+        }
+        legend {
+            padding: 0  10px;
+        }
+        table{
+            width: 520px;
+            height: 380px;
+            border-collapse: collapse;
+            border: 5px solid rgba(241, 183, 255, 0.822);
+            z-index: 1;
+            background-size: cover;
+
+            border-radius: 6px;
+        }
+        td{
+            height: 60px;
+            border:1px solid black;
+            width: 50px;
+            text-align: center;
+            font-size: 40px;
+            
+        }
+        .lastday{
+            color:rgb(255, 255, 255);
+            text-shadow: 3px 3px 2px rgb(0, 0, 0);
+        }
+        .target{
+            text-shadow: 3px 3px 2px rgb(0, 0, 0);
+        }
+        .yoil{
+            text-shadow: -1px 0 rgb(255, 255, 255),
+	       0 1px rgb(255, 255, 255),
+	       1px 0 rgb(255, 255, 255),
+	       0 -1px rgb(255, 255, 255);
+
+        }
+        /*$(document).ready(function(){
+  $("#fadeIn").click(function(){
+    $("#testDiv1").fadeIn(); //기본 fadeIn 메소드
+    $("#testDiv2").fadeIn("slow"); // fadeIn slow 적용
+    $("#testDiv3").fadeIn(6000); // 시간설정 6초
+  });*/
+    </style>
+    <script>
+        window.onload=function(){
+            document.querySelector("#b1").onclick=clickFunc;
+            document.querySelector("#nextbtn").onclick=nextFunc;
+            document.querySelector("#backbtn").onclick=backFunc;
+        }
+        //
+        var tbTag=document.createElement("table")
+        var field=document.createElement("fieldset")
+
+        var y;
+        var m;
+        var month;
+        var set=1;
+        //
+        function clickFunc(){
+            y=document.querySelector("#sel1").value
+            m=document.querySelector("#sel2").value
+            date=new Date(y,m,0)
+            year=date.getFullYear()
+            month=date.getMonth()+1
+            lastday=date.getDate()
+            firstday=new Date(y,m-1,1).getDay()
+            lastmonthday=new Date(y,m-1,0).getDate()
+            set=1
+            createCalendar();
+            
+        }
+
+        function createCalendar(){
+            
+            
+            var legend=document.createElement("legend")
+            const yoil=["일","월","화","수","목","금","토"]
+///////////////////////////////////
+           
+            while(field.hasChildNodes()){
+                field.removeChild(field.lastChild)
+            }
+            while(tbTag.hasChildNodes())
+                tbTag.removeChild(tbTag.lastChild)
+
+            
+            
+            tbTag.id="tb"
+            legend.innerHTML="~"+year+"년 "+month+"월~"
+            field.appendChild(legend)
+            field.appendChild(tbTag)
+            document.querySelector("body").appendChild(field)
+            
+            
+
+///////////////////////////////////
+            for(a=0; a<7; a++){
+            var tdTag=document.createElement("td")
+                tbTag=document.querySelector("#tb")
+                tdTag.className="yoil"
+                tdTag.innerHTML=yoil[a]
+                tbTag.appendChild(tdTag)
+                if(a==6){trTag=document.createElement("tr")
+                tbTag.appendChild(trTag)
+                }
+            }
+            var count=1
+            var lastmonthdaycount=lastmonthday-(firstday-1)
+            for(a=1; a<=firstday; a++){
+                var tdTag=document.createElement("td")
+                tdTag.className="lastday"
+                tbTag=document.querySelector("#tb")
+                tdTag.innerHTML=lastmonthdaycount
+                tbTag.appendChild(tdTag)
+                lastmonthdaycount++
+                count++
+            }
+            for(a=1; a<=lastday; a++){
+                var tdTag=document.createElement("td")
+                tbTag=document.querySelector("#tb")
+                tdTag.className="target"
+                tdTag.innerHTML=a
+                tbTag.appendChild(tdTag)
+                count++
+                if(count==8){
+                    count=1
+                    trTag=document.createElement("tr")
+                    tbTag.appendChild(trTag)}
+            }
+            for(a=1; a<=10; a++){
+                if(count==8 || count==1){
+                    break
+                }
+                var tdTag=document.createElement("td")
+                tdTag.className="lastday"
+                tbTag=document.querySelector("#tb")
+                tdTag.innerHTML=a
+                tbTag.appendChild(tdTag)
+                count++
+               
+            }
+            switch(month){
+                case 3 : tbTag.style.backgroundImage="url('spring.jpg')"; tbTag.style.borderColor="#E5D85C";
+                        $(".target").css('color','#E5D85C');break;
+                case 4 : tbTag.style.backgroundImage="url('spring.jpg')"; tbTag.style.borderColor="#E5D85C";
+                        $(".target").css('color','#E5D85C');break;
+                case 5 : tbTag.style.backgroundImage="url('spring.jpg')"; tbTag.style.borderColor="#E5D85C"; 
+                        $(".target").css('color','#E5D85C');break;
+                case 6 : tbTag.style.backgroundImage="url('summer.jpg')"; tbTag.style.borderColor="cyan";
+                        $(".target").css('color','#D4F4FA');break;
+                case 7 : tbTag.style.backgroundImage="url('summer.jpg')"; tbTag.style.borderColor="cyan";
+                        $(".target").css('color','#D4F4FA');break;
+                case 8 : tbTag.style.backgroundImage="url('summer.jpg')"; tbTag.style.borderColor="cyan";
+                        $(".target").css('color','#D4F4FA');break;
+                case 9 : tbTag.style.backgroundImage="url('fall.jpg')"; tbTag.style.borderColor="brown";
+                        $(".target").css('color','#FFBB00');break;
+                case 10 : tbTag.style.backgroundImage="url('fall.jpg')"; tbTag.style.borderColor="brown";
+                        $(".target").css('color','#FFBB00');break;
+                case 11 : tbTag.style.backgroundImage="url('fall.jpg')"; tbTag.style.borderColor="brown";
+                        $(".target").css('color','#FFBB00');break;
+                default : tbTag.style.backgroundImage="url('winter.jpg')"; tbTag.style.borderColor="rgba(241, 183, 255, 0.822)";
+                        $(".target").css('color','rgba(241, 183, 255, 0.822)');break;
+            }
+            var div=document.getElementById("dv").appendChild(field)
+
+            $("div").fadeOut(0.5)
+            $("div").fadeIn(300)
+        }
+        function nextFunc(){
+            if(month==12){
+                y=parseInt(document.querySelector("#sel1").value)+1
+                m=1
+                
+                date=new Date(y,m,0)
+                year=date.getFullYear()
+                month=date.getMonth()+1
+                lastday=date.getDate()
+                firstday=new Date(y,m-1,1).getDay()
+                lastmonthday=new Date(y,m-1,0).getDate()
+                document.getElementById("sel1").value=year
+                document.getElementById("sel2").selectedIndex=month
+                /*if(month==2 || month==11){$("div").fadeOut(0.5); $("div").fadeIn(10000)
+                }else{
+                if(month==5 || month==8){$("div").fadeOut(0.5); $("div").fadeIn(10000)}
+                }*/
+                }else{
+                y=document.querySelector("#sel1").value
+                m=parseInt(document.querySelector("#sel2").value)+1
+                
+                date=new Date(y,m,0)
+                year=date.getFullYear()
+                month=date.getMonth()+1
+                lastday=date.getDate()
+                firstday=new Date(y,m-1,1).getDay()
+                lastmonthday=new Date(y,m-1,0).getDate()
+                document.getElementById("sel2").selectedIndex=month
+            }
+            createCalendar();
+        }
+        function backFunc(){
+            if(month==1){
+                y=parseInt(document.querySelector("#sel1").value)-1
+                m=12
+                
+                date=new Date(y,m,0)
+                year=date.getFullYear()
+                month=date.getMonth()+1
+                lastday=date.getDate()
+                firstday=new Date(y,m-1,1).getDay()
+                lastmonthday=new Date(y,m-1,0).getDate()
+                document.getElementById("sel1").value=year
+                document.getElementById("sel2").selectedIndex=month
+            }else{
+                y=document.querySelector("#sel1").value
+                m=parseInt(document.querySelector("#sel2").value)-1
+                
+                date=new Date(y,m,0)
+                year=date.getFullYear()
+                month=date.getMonth()+1
+                lastday=date.getDate()
+                firstday=new Date(y,m-1,1).getDay()
+                lastmonthday=new Date(y,m-1,0).getDate()
+                document.getElementById("sel2").selectedIndex=month
+            }
+            createCalendar();
+        }
+    </script>
+</head>
+<body>
+    <select id=sel1>
+        <option selected disabled>--년도--</option>
+        <script>
+            for(a=1990;a<=2050;a++)
+            document.write("<option>"+a+"</option>")
+        </script>
+    </select>년
+    <select id=sel2>
+        <option selected disabled>--월--</option>
+        <script>
+            for(a=1;a<=12;a++)
+            document.write("<option>"+a+"</option>")
+        </script>
+    </select>월
+    <input type="button" id=b1 value="달력 출력">
+    <input type="button" id=backbtn value="<">
+    <input type="button" id=nextbtn value=">">
+    <div id=dv>
+
+    </div>
+
+</body id=bd>
+</html>
